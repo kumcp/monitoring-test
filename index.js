@@ -51,7 +51,7 @@ app.post("/sendMetric", async (req, res) => {
 });
 
 app.get("/metrics", async (req, res) => {
-    res.sendFile(path.join(__dirname, "public/metricss.html"));
+    res.sendFile(path.join(__dirname, "public/metrics.html"));
 });
 
 app.listen(port, () => {
