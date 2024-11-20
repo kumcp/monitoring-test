@@ -51,10 +51,11 @@ app.post("/sendMetric", async (req, res) => {
 });
 
 app.get("/metrics", async (req, res) => {
+    res.setHeader("content-type", "text/plain");
     res.send(`codestar_metrics 15 
-user_count_metrics 18 
-error_count 12 
-request_per_session 30
+        user_count_metrics 18 
+        error_count 12 
+        request_per_session 30
 `);
 });
 
