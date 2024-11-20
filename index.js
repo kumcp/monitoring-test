@@ -50,6 +50,10 @@ app.post("/sendMetric", async (req, res) => {
     }
 });
 
+app.get("/metrics", async (req, res) => {
+    res.sendFile(path.join(__dirname, "public/metricss.html"));
+});
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });

@@ -21,4 +21,6 @@ npm install
 
 sudo apt install nginx -y
 
-ln -s ./system-config/nginxs
+sudo ln -s $HOME/monitoring-test/system-config/monitoring-test-nginx /etc/nginx/sites-enabled/monitoring-test-nginx
+
+npm run serve > $HOME/run.log 2>&1
