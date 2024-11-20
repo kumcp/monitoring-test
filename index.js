@@ -51,7 +51,11 @@ app.post("/sendMetric", async (req, res) => {
 });
 
 app.get("/metrics", async (req, res) => {
-    res.sendFile(path.join(__dirname, "public/metrics.html"));
+    res.send(`codestar_metrics 15 
+user_count_metrics 18 
+error_count 12 
+request_per_session 30
+`);
 });
 
 app.listen(port, () => {
