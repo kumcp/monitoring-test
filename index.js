@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-app.post("/sendLog", async (req, res) => {
+app.post("/", async (req, res) => {
     await sendLogToCloudWatch(
         "codestar-loggroup",
         "codestar-logstream",
