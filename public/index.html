@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Send Log</title>
+    </head>
+    <body>
+        <h1>Send Log to CloudWatch</h1>
+        <form action="/" method="POST">
+            <label for="text">Log Text:</label>
+            <input type="text" id="text" name="text" required />
+            <button type="submit">Send</button>
+        </form>
+        <hr />
+        <h1>Send Custom Metric to CloudWatch</h1>
+        <form id="metricForm">
+            <label for="namespace">Namespace:</label>
+            <input
+                type="text"
+                id="namespace"
+                name="namespace"
+                required
+            /><br /><br />
+
+            <label for="metricName">Metric Name:</label>
+            <input
+                type="text"
+                id="metricName"
+                name="metricName"
+                required
+            /><br /><br />
+
+            <label for="value">Value:</label>
+            <input type="number" id="value" name="value" required /><br /><br />
+
+            <label for="unit">Unit:</label>
+            <select id="unit" name="unit" required>
+                <option value="Count">Count</option>
+                <option value="Seconds">Seconds</option>
+                <option value="Milliseconds">Milliseconds</option>
+                <option value="Bytes">Bytes</option>
+                <option value="Kilobytes">Kilobytes</option>
+                <option value="Megabytes">Megabytes</option>
+                <option value="Gigabytes">Gigabytes</option>
+                <option value="Percent">Percent</option>
+                <option value="None">None</option>
+                <!-- Add more units if needed --></select
+            ><br /><br />
+
+            <button type="submit">Send Metric</button>
+        </form>
+
+        <p id="responseMessage"></p>
+
+        <script>
+            document
+                .getElementById("metricForm")
+                .addEventListener("submit", async function (event) {
+                    event.preventDefault();
+
+                    const namespace =
+                        document.getElementById("namespace").value;
+                    const metricName =
+                        document.getElementById("metricName").value;
+                    const value = document.getElementById("value").value;
+                    const unit = document.getElementById("unit").value;
+
+                    try {
+                        const response = await fetch("/sendMetric", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                namespace,
+                                metricName,
+                                value: parseFloat(value),
+                                unit
+                            })
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok) {
+                            document.getElementById(
+                                "responseMessage"
+                            ).textContent = "Metric sent successfully!";
+                        } else {
+                            document.getElementById(
+                                "responseMessage"
+                            ).textContent = "Error: " + data.error;
+                        }
+                    } catch (error) {
+                        document.getElementById("responseMessage").textContent =
+                            "Error sending metric.";
+                    }
+                });
+        </script>
+    </body>
+</html>
